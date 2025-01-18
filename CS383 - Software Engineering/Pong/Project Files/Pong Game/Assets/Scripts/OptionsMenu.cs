@@ -7,26 +7,26 @@ using UnityEngine.UI;
 public class OptionsMenu : MonoBehaviour
 {
     [Header("Audio Settings")]
-    public Slider sfxVolumeSlider; // Reference to the SFX volume slider
-    public Slider musicVolumeSlider; // Reference to the music volume slider
-    public AudioSource sfxSource; // Reference to the AudioSource for SFX
-    public AudioSource musicSource; // Reference to the AudioSource for music
+    public Slider sfxVolumeSlider;
+    public Slider musicVolumeSlider;
+    public AudioSource sfxSource;
+    public AudioSource musicSource;
 
     [Header("Gameplay Settings")]
-    public Toggle twoPlayerModeToggle; // Reference to the 2-Player Mode checkbox
-    public Toggle drbcModeToggle; // Reference to the DRBC Mode checkbox
-    public TMP_Dropdown difficultyDropdown; // Reference to the TMP difficulty dropdown
+    public Toggle twoPlayerModeToggle;
+    public Toggle drbcModeToggle;
+    public TMP_Dropdown difficultyDropdown;
 
     [Header("Gameplay Objects")]
-    public GameObject enemyAI; // Reference to the enemy paddle
-    public GameObject player2; // Reference to the second player's paddle
+    public GameObject enemyAI;
+    public GameObject player2;
+    public GameObject secretWall;
 
     private bool isTwoPlayerMode = false;
     private bool isDRBCMode = false;
 
     void Start()
     {
-        // Load saved settings and apply them
         sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
         musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         twoPlayerModeToggle.isOn = PlayerPrefs.GetInt("TwoPlayerMode", 0) == 1;
@@ -66,13 +66,15 @@ public class OptionsMenu : MonoBehaviour
         {
             enemyAI.SetActive(false);
             player2.SetActive(true);
-            difficultyDropdown.interactable = false; // Disable the difficulty dropdown
+            difficultyDropdown.interactable = false;
+            drbcModeToggle.interactable = false;
         }
         else
         {
             enemyAI.SetActive(true);
             player2.SetActive(false);
-            difficultyDropdown.interactable = true; // Enable the difficulty dropdown
+            difficultyDropdown.interactable = true;
+            drbcModeToggle.interactable = true;
         }
     }
 
@@ -87,11 +89,20 @@ public class OptionsMenu : MonoBehaviour
     {
         if (isDRBCMode)
         {
+            difficultyDropdown.interactable = false;
+            twoPlayerModeToggle.interactable = false;
             Debug.Log("DRBC Mode enabled: Impossible to lose.");
+            enemyAI.SetActive(false);
+            secretWall.SetActive(true);
         }
         else
         {
             Debug.Log("DRBC Mode disabled: Normal gameplay.");
+            twoPlayerModeToggle.interactable = true;
+            difficultyDropdown.interactable = true;
+            enemyAI.SetActive(true);
+            secretWall.SetActive(false);
+
         }
     }
 

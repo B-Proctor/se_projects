@@ -5,21 +5,21 @@ using TMPro;
 
 public class ComboCounter : MonoBehaviour
 {
-    public TextMeshProUGUI comboText; // Reference to the TMP text component
-    public AnimationCurve shakeIntensity; // Animation curve for shake effect
-    public float shakeDuration = 0.5f; // Duration of the shake animation
-    public float fadeDuration = 1f; // Duration of the fade-out effect
+    public TextMeshProUGUI comboText; 
+    public AnimationCurve shakeIntensity; 
+    public float shakeDuration = 0.5f; 
+    public float fadeDuration = 1f; 
 
-    private int comboCount = 0; // Current combo count
-    private Vector3 originalPosition; // Original position of the text
+    private int comboCount = 0; 
+    private Vector3 originalPosition; 
     private Coroutine shakeCoroutine;
     private Coroutine fadeCoroutine;
 
     void Start()
     {
-        originalPosition = comboText.rectTransform.localPosition; // Store the original position
-        UpdateComboText(); // Initialize the combo text
-        comboText.alpha = 0; // Start with the text hidden
+        originalPosition = comboText.rectTransform.localPosition; 
+        UpdateComboText(); 
+        comboText.alpha = 0; 
     }
 
     public void IncrementCombo()
@@ -29,16 +29,16 @@ public class ComboCounter : MonoBehaviour
 
         if (shakeCoroutine != null)
         {
-            StopCoroutine(shakeCoroutine); // Stop any ongoing shake
+            StopCoroutine(shakeCoroutine); 
         }
         shakeCoroutine = StartCoroutine(ShakeText());
 
         if (fadeCoroutine != null)
         {
-            StopCoroutine(fadeCoroutine); // Stop fade-out if combo continues
+            StopCoroutine(fadeCoroutine); 
         }
 
-        comboText.alpha = 1; // Ensure text is visible
+        comboText.alpha = 1; 
         ChangeTextColor();
     }
 
@@ -46,7 +46,7 @@ public class ComboCounter : MonoBehaviour
     {
         if (fadeCoroutine != null)
         {
-            StopCoroutine(fadeCoroutine); // Stop any ongoing fade
+            StopCoroutine(fadeCoroutine);
         }
         fadeCoroutine = StartCoroutine(FadeOutAndReset());
     }
@@ -64,7 +64,7 @@ public class ComboCounter : MonoBehaviour
         {
             elapsed += Time.deltaTime;
 
-            float intensity = shakeIntensity.Evaluate(elapsed / shakeDuration); // Evaluate intensity based on the animation curve
+            float intensity = shakeIntensity.Evaluate(elapsed / shakeDuration); 
             Vector3 offset = new Vector3(
                 Random.Range(-1f, 1f) * intensity,
                 Random.Range(-1f, 1f) * intensity,
@@ -76,7 +76,7 @@ public class ComboCounter : MonoBehaviour
             yield return null;
         }
 
-        comboText.rectTransform.localPosition = originalPosition; // Reset position
+        comboText.rectTransform.localPosition = originalPosition; 
     }
 
     private void ChangeTextColor()
@@ -107,13 +107,13 @@ public class ComboCounter : MonoBehaviour
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
-            comboText.alpha = Mathf.Lerp(startAlpha, 0, elapsed / fadeDuration); // Smooth fade-out
+            comboText.alpha = Mathf.Lerp(startAlpha, 0, elapsed / fadeDuration);
             yield return null;
         }
 
-        comboText.alpha = 0; // Ensure it's fully invisible
-        comboCount = 0; // Reset the combo count
-        UpdateComboText(); // Update the text to reflect the reset
-        comboText.color = Color.white; // Reset color to white
+        comboText.alpha = 0; 
+        comboCount = 0; 
+        UpdateComboText(); 
+        comboText.color = Color.white; 
     }
 }

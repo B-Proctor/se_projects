@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    public int scorer; // 1 for player, 2 for enemy
-    public AudioClip goalSound; // Sound to play when a goal is scored
+    public int scorer; 
+    public AudioClip goalSound; 
     private GameManager gameManager;
     private AudioSource audioSource;
 
@@ -20,7 +20,7 @@ public class Goal : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             PlayGoalSound();
-            gameManager.AddScore(scorer); // Update the score
+            gameManager.AddScore(scorer); 
             StartCoroutine(HandleGoal(other.gameObject));
         }
     }
@@ -35,11 +35,11 @@ public class Goal : MonoBehaviour
 
     IEnumerator HandleGoal(GameObject ball)
     {
-        ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero; // Stop the ball
-        ball.transform.position = Vector3.zero; // Reset ball position
+        ball.GetComponent<Rigidbody2D>().velocity = Vector2.zero; 
+        ball.transform.position = Vector3.zero; 
 
-        yield return new WaitForSeconds(3); // Wait 3 seconds
+        yield return new WaitForSeconds(3); 
 
-        gameManager.ResetBall(); // Launch the ball again
+        gameManager.ResetBall(); 
     }
 }

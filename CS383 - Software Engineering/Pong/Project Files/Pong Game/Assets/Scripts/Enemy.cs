@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speedEasy = 3f; // Easy speed
-    public float speedMedium = 5f; // Medium speed
-    public float speedImpossible = 10f; // Impossible speed
+    public float speedEasy = 3f;
+    public float speedMedium = 5f;
+    public float speedImpossible = 10f;
 
-    public float reactionTimeEasy = 0.4f; // Easy reaction time
-    public float reactionTimeMedium = 0.2f; // Medium reaction time
-    public float reactionTimeImpossible = 0.05f; // Impossible reaction time
+    public float reactionTimeEasy = 0.4f;
+    public float reactionTimeMedium = 0.2f;
+    public float reactionTimeImpossible = 0.05f;
 
-    public float errorMarginEasy = 0.5f; // Easy error margin
-    public float errorMarginMedium = 0.3f; // Medium error margin
-    public float errorMarginImpossible = 0.0f; // Impossible has no error
+    public float errorMarginEasy = 0.5f;
+    public float errorMarginMedium = 0.3f;
+    public float errorMarginImpossible = 0.0f;
 
     private Transform ball;
     private Vector3 paddlePosition;
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
         ball = GameObject.FindGameObjectWithTag("Ball").transform;
         targetY = transform.position.y;
 
-        SetDifficulty(PlayerPrefs.GetInt("Difficulty", 1)); // Load saved difficulty (default: Medium)
+        SetDifficulty(PlayerPrefs.GetInt("Difficulty", 1));
     }
 
     void Update()
@@ -45,7 +45,6 @@ public class Enemy : MonoBehaviour
             timeSinceLastUpdate = 0f;
         }
 
-        // Move paddle towards the target Y position
         paddlePosition = transform.position;
 
         if (targetY > paddlePosition.y)
@@ -57,7 +56,7 @@ public class Enemy : MonoBehaviour
             paddlePosition.y -= currentSpeed * Time.deltaTime;
         }
 
-        paddlePosition.y = Mathf.Clamp(paddlePosition.y, -4.5f, 4.5f); // Clamp within boundaries
+        paddlePosition.y = Mathf.Clamp(paddlePosition.y, -4.5f, 4.5f);
         transform.position = paddlePosition;
     }
 
@@ -65,17 +64,17 @@ public class Enemy : MonoBehaviour
     {
         switch (difficulty)
         {
-            case 0: // Easy
+            case 0:
                 currentSpeed = speedEasy;
                 currentReactionTime = reactionTimeEasy;
                 currentErrorMargin = errorMarginEasy;
                 break;
-            case 1: // Medium
+            case 1:
                 currentSpeed = speedMedium;
                 currentReactionTime = reactionTimeMedium;
                 currentErrorMargin = errorMarginMedium;
                 break;
-            case 2: // Impossible
+            case 2:
                 currentSpeed = speedImpossible;
                 currentReactionTime = reactionTimeImpossible;
                 currentErrorMargin = errorMarginImpossible;

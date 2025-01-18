@@ -8,18 +8,18 @@ public class GameManager : MonoBehaviour
     public int playerScore = 0;
     public int enemyScore = 0;
 
-    public AudioClip[] paddleHitSounds; // Array of paddle hit sounds
-    public AudioSource musicSource; // Reference to the music audio source
-    public TextMeshProUGUI playerScoreText; // Reference to TextMeshPro for player score
-    public TextMeshProUGUI enemyScoreText; // Reference to TextMeshPro for enemy score
+    public AudioClip[] paddleHitSounds;
+    public AudioSource musicSource;
+    public TextMeshProUGUI playerScoreText;
+    public TextMeshProUGUI enemyScoreText;
 
     private AudioSource audioSource;
-    private int totalHits; // Total paddle hits for determining pitch
+    private int totalHits;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        UpdateScoreUI(); // Initialize score display
+        UpdateScoreUI();
         ResetMusicPitch();
     }
 
@@ -36,14 +36,14 @@ public class GameManager : MonoBehaviour
     {
         if (musicSource != null)
         {
-            float newPitch = 1.0f + totalHits * 0.05f; // Increment pitch by 0.05 per hit
-            musicSource.pitch = Mathf.Min(newPitch, 2.0f); // Cap pitch at 2.0
+            float newPitch = 1.0f + totalHits * 0.05f;
+            musicSource.pitch = Mathf.Min(newPitch, 2.0f);
         }
     }
 
     public void ResetMusicPitch()
     {
-        totalHits = 0; // Reset hit counter
+        totalHits = 0;
         StartCoroutine(LowerPitchOverTime());
     }
 
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
             enemyScore++;
         }
 
-        ResetMusicPitch(); // Start dynamic pitch lowering
+        ResetMusicPitch();
         UpdateScoreUI();
     }
 
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator LowerPitchOverTime()
     {
         float startPitch = musicSource.pitch;
-        float duration = 3.0f; // Match the ball reset delay
+        float duration = 3.0f;
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        musicSource.pitch = 1.0f; // Ensure exact reset
+        musicSource.pitch = 1.0f;
     }
 
     public void ResetBall()

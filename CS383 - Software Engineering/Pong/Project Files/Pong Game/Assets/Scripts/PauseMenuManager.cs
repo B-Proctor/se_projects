@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    public GameObject pauseMenuUI; // Reference to the pause menu GameObject
-    public GameObject optionsMenuUI; // Reference to the options menu GameObject
-    public GameObject controlsMenuUI; // Reference to the controls menu GameObject
-    public GameObject copyrightMenuUI; // Reference to the copyright disclaimer menu GameObject
+    /*references*/
+    public GameObject pauseMenuUI; 
+    public GameObject optionsMenuUI; 
+    public GameObject controlsMenuUI; 
+    public GameObject copyrightMenuUI;
 
     private bool isPaused = false;
 
     void Update()
     {
-        // Toggle pause when Esc or Space is pressed
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))
         {
             if (isPaused)
@@ -29,41 +29,41 @@ public class PauseMenuManager : MonoBehaviour
 
     public void Resume()
     {
-        CloseAllPanels(); // Close all menu panels
-        Time.timeScale = 1f; // Resume the game
+        CloseAllPanels(); 
+        Time.timeScale = 1f; 
         isPaused = false;
     }
 
     public void Pause()
     {
-        CloseAllPanels(); // Ensure all panels are closed
-        pauseMenuUI.SetActive(true); // Open the pause menu
-        Time.timeScale = 0f; // Pause the game
+        CloseAllPanels(); 
+        pauseMenuUI.SetActive(true); 
+        Time.timeScale = 0f; 
         isPaused = true;
     }
 
     public void OpenOptions()
     {
         CloseAllPanels();
-        optionsMenuUI.SetActive(true); // Open the options menu
+        optionsMenuUI.SetActive(true); 
     }
 
     public void OpenControls()
     {
         CloseAllPanels();
-        controlsMenuUI.SetActive(true); // Open the controls menu
+        controlsMenuUI.SetActive(true); 
     }
 
     public void OpenCopyrightDisclaimer()
     {
         CloseAllPanels();
-        copyrightMenuUI.SetActive(true); // Open the copyright disclaimer menu
+        copyrightMenuUI.SetActive(true);
     }
 
     public void ExitGame()
     {
-        Debug.Log("Exiting Game..."); // Log the exit action
-        Application.Quit(); // Exit the application
+        Debug.Log("Exiting Game..."); 
+        Application.Quit(); 
     }
 
     private void CloseAllPanels()
